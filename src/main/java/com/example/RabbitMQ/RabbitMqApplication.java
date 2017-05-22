@@ -91,6 +91,7 @@ public class RabbitMqApplication implements RabbitListenerConfigurer {
 		public void configureRabbitListeners(final RabbitListenerEndpointRegistrar registrar) {
 			registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory());
 		}
+		
 	 
 	
 }
