@@ -1,7 +1,5 @@
 package com.example.RabbitMQ;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -12,8 +10,9 @@ import java.util.Random;
 @Service
 public class CustomMessageSender {
 
-    private static final Logger log = LoggerFactory.getLogger(CustomMessageSender.class);
-
+	@Autowired
+	private CarRepo carRepo;
+	
     private final RabbitTemplate rabbitTemplate;
 
     @Autowired
@@ -21,11 +20,11 @@ public class CustomMessageSender {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    @Scheduled(fixedDelay = 3000L)
+    @Scheduled(fixedDelay = 30L)
     public void sendMessage() {
-        final CustomMessage message = new CustomMessage("Hello there!", new Random().nextInt(50), false);
+    	int randomNumber=new Random().nextInt(23);
+        final CustomMessage message = carRepo.findById(randomNumber);
         System.out.println("sending messages");
-     //   log.info("Sending message...");
         rabbitTemplate.convertAndSend(RabbitMqApplication.EXCHANGE_NAME, RabbitMqApplication.ROUTING_KEY, message);
     }
 }
