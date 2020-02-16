@@ -1,2 +1,2 @@
 # RabbitMQ
-Using Rabbit MQ
+Messaging Queue
